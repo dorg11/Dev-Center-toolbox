@@ -2,21 +2,13 @@
 //  OpenShift sample Node application
 var express = require('express');
 var fs      = require('fs');
-// Retrieve
 var MongoClient = require('mongodb').MongoClient;
-var connection = 'mongodb://' + process.env.OPENSHIFT_MONGODB_DB_HOST + ':' + process.env.OPENSHIFT_MONGODB_DB_PORT + '/';
+// Retrieve
 
+
+var url = 'mongodb://admin:ee1CkJGwc7Zh@' + process.env.OPENSHIFT_MONGODB_DB_HOST + ':' + process.env.OPENSHIFT_MONGODB_DB_PORT + '/node';
 var a = 'waiting';
 // Connect to the db
-MongoClient.connect(connection, function(err, db) {
-  if(!err) {
-    console.log("We are connected");
-    a = 'connected';
-  }
-  else {
-    a = err;
-  }
-});
 
 
 /**
@@ -120,7 +112,23 @@ var SampleApp = function() {
             res.send(self.cache_get('index.html') );
         };
         self.routes['/a'] = function(req, res) {
-            res.send(a);
+          MongoClient.connect(url, function(err, db) {
+            if(!err) {
+              db.collection('test').insertOne({
+                "test" : true,
+              }), function(err, result) {
+                if (err) {
+                  res.send(err);
+                }
+                else {
+                  console.log('success!')
+                }
+              }
+            }
+            else {
+              a = err;
+            }
+          });
         };
     };
 
