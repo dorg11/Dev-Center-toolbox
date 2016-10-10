@@ -121,7 +121,7 @@ var SampleApp = function() {
                   res.send(err);
                 }
                 else {
-                  console.log('success!')
+                  res.send('success! added to DB');
                 }
               }
             }
