@@ -10,7 +10,23 @@ var url = 'mongodb://admin:ee1CkJGwc7Zh@' + process.env.OPENSHIFT_MONGODB_DB_HOS
 var a = 'waiting';
 // Connect to the db
 
-
+MongoClient.connect(url, function(err, db) {
+  if(!err) {
+    db.collection('test').insertOne({
+      "test" : true,
+    }), function(err, result) {
+      if (err) {
+        res.send(err);
+      }
+      else {
+        res.send('success! added to DB');
+      }
+    }
+  }
+  else {
+    a = err;
+  }
+});
 /**
  *  Define the sample application.
  */
@@ -112,23 +128,7 @@ var SampleApp = function() {
             res.send(self.cache_get('index.html') );
         };
         self.routes['/a'] = function(req, res) {
-          MongoClient.connect(url, function(err, db) {
-            if(!err) {
-              db.collection('test').insertOne({
-                "test" : true,
-              }), function(err, result) {
-                if (err) {
-                  res.send(err);
-                }
-                else {
-                  res.send('success! added to DB');
-                }
-              }
-            }
-            else {
-              a = err;
-            }
-          });
+
         };
     };
 
