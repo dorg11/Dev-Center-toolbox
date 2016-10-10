@@ -12,16 +12,7 @@ var a = 'waiting';
 
 MongoClient.connect(url, function(err, db) {
   if(!err) {
-    db.collection('test').insertOne({
-      "test" : true,
-    }), function(err, result) {
-      if (err) {
-        res.send(err);
-      }
-      else {
-        res.send('success! added to DB');
-      }
-    }
+    a = 'success';
   }
   else {
     a = err;
@@ -128,7 +119,39 @@ var SampleApp = function() {
             res.send(self.cache_get('index.html') );
         };
         self.routes['/a'] = function(req, res) {
-
+          MongoClient.open(function (err, db) {
+            if (err) {
+              res.send(err);
+            }
+            else {
+              db.collection('restaurants').insertOne( {
+                    "address" : {
+                       "street" : "2 Avenue",
+                       "zipcode" : "10075",
+                       "building" : "1480",
+                       "coord" : [ -73.9557413, 40.7720266 ]
+                    },
+                    "borough" : "Manhattan",
+                    "cuisine" : "Italian",
+                    "grades" : [
+                       {
+                          "date" : new Date("2014-10-01T00:00:00Z"),
+                          "grade" : "A",
+                          "score" : 11
+                       },
+                       {
+                          "date" : new Date("2014-01-16T00:00:00Z"),
+                          "grade" : "B",
+                          "score" : 17
+                       }
+                    ],
+                    "name" : "Vella",
+                    "restaurant_id" : "41704620"
+                 }, function(err, result) {
+                  res.send("Inserted a document into the restaurants collection.");
+                });
+            }
+          });
         };
     };
 
