@@ -2,15 +2,18 @@
 //  OpenShift sample Node application
 var express = require('express');
 var fs      = require('fs');
-// Retrieve
 var MongoClient = require('mongodb').MongoClient;
+
+// Retrieve
+
 var connection = 'mongodb://' + process.env.OPENSHIFT_MONGODB_DB_HOST + ':' + process.env.OPENSHIFT_MONGODB_DB_PORT + '/';
 var a = 'waiting';
 // Connect to the db
-MongoClient.connect("mongodb://admin:ee1CkJGwc7Zh@127.11.121.130:27017/node", function(err, db) {
+
+MongoClient.connect(connection, function(err, db) {
   if(!err) {
     console.log("We are connected");
-    a = 'connected';
+    a = db;
   }
   else {
     a = err;
