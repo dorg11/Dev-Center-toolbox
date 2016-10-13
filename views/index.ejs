@@ -15,10 +15,11 @@
 
 <h1 style="text-align:center">Incoming requests</h1>
 
+<br>
 
-<div class="container" style="background-color:white">
+<div class="container">
 <% for (var i=data.length - 1; i >= 0 ; i--) { %>
-  <div class="card">
+  <div class="card" style="background-color:white">
     <ul class="list-group list-group-flush">
     <% if (data[i].headers['x-wix-application-id']) { %>
       <li class="list-group-item"> <b>App ID</b>: <%- data[i].headers['x-wix-application-id'] %> </li>
