@@ -20,10 +20,12 @@
 <% for (var i=0; i < data.length; i++) { %>
   <div class="card">
     <ul class="list-group list-group-flush">
-      <li class="list-group-item"> App ID : <%- data[i].x-wix-application-id %> </li>
-      <li class="list-group-item"> Instance ID : <%- data[i].x-wix-instance-id %> </li>
-      <li class="list-group-item"> Signature : <%- data[i].x-wix-signature %> </li>
-      <li class="list-group-item"> Webhook type : <%- data[i].x-wix-event-type %> </li>
+    <% if (data[i].headers['x-wix-application-id']) { %>
+      <li class="list-group-item"> App ID : <%- data[i].headers['x-wix-application-id'] %> </li>
+      <li class="list-group-item"> Instance ID : <%- data[i].headers['x-wix-instance-id'] %> </li>
+      <li class="list-group-item"> Signature : <%- data[i].headers['x-wix-signature'] %> </li>
+      <li class="list-group-item"> Webhook type : <%- data[i].headers['x-wix-event-type'] %> </li>
+    <% } %>
       <li class="list-group-item"> Body :  <%- JSON.stringify(data[i].body) %> </li>
     </ul>
   </div>
