@@ -34,6 +34,11 @@ app.post('/server', function(req, res) {
     }
   })
 });
+app.get('/', function(req,res) {
+  res.send('working');
+});
+
+
 app.get('/display', function(req, res) {
   webhook.find({}, function (err, data) {
     res.render('index', {data: data});
