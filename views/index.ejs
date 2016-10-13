@@ -13,13 +13,13 @@
 </head>
 <body style="background-color:#997720">
 
-<h1 style="text-align:center;border-radius:5px">Incoming requests</h1>
+<h1 style="text-align:center">Incoming requests</h1>
 
 <br>
 
 <div class="container">
 <% for (var i=data.length - 1; i >= 0 ; i--) { %>
-  <div class="card" style="background-color:white">
+  <div class="card" style="background-color:white;border-radius:5px" >
     <ul class="list-group list-group-flush">
     <% if (data[i].headers['x-wix-application-id']) { %>
       <li class="list-group-item"> <b>App ID</b>: <%- data[i].headers['x-wix-application-id'] %> </li>
