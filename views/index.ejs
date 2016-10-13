@@ -1,0 +1,18 @@
+<html>
+
+<body>
+
+<h1>Incoming requests</h1>
+
+<% for (var i=0; i < data.length; i++) { %>
+    <li>
+          <ul>
+            <li> <%- JSON.stringify(data[i].headers) %> </li>
+            <li> <%- JSON.stringify(data[i].body) %> </li>
+          </ul>
+    </li>
+<% } %>
+
+</body>
+
+</html>
