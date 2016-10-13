@@ -27,7 +27,9 @@
       <li class="list-group-item"> <b>Signature:</b> <%- data[i].headers['x-wix-signature'] %> </li>
       <li class="list-group-item"> <b>Webhook type:</b> <%- data[i].headers['x-wix-event-type'] %> </li>
     <% } %>
-      <li class="list-group-item"> <b>Body:</b>  <%- JSON.stringify(data[i].body) %> </li>
+      <li class="list-group-item"> <b>Body:</b> <code>
+
+      <%- JSON.stringify(data[i].body, null, 1) %></code> </li>
     </ul>
   </div>
   <% } %>
