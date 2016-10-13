@@ -11,22 +11,22 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 </head>
-<body>
+<body style="background-color:#997720">
 
 <h1 style="text-align:center">Incoming requests</h1>
 
 
-<div class="container">
+<div class="container" style="background-color:white">
 <% for (var i=data.length - 1; i >= 0 ; i--) { %>
   <div class="card">
     <ul class="list-group list-group-flush">
     <% if (data[i].headers['x-wix-application-id']) { %>
-      <li class="list-group-item"> App ID : <%- data[i].headers['x-wix-application-id'] %> </li>
-      <li class="list-group-item"> Instance ID : <%- data[i].headers['x-wix-instance-id'] %> </li>
-      <li class="list-group-item"> Signature : <%- data[i].headers['x-wix-signature'] %> </li>
-      <li class="list-group-item"> Webhook type : <%- data[i].headers['x-wix-event-type'] %> </li>
+      <li class="list-group-item"> <b>App ID</b>: <%- data[i].headers['x-wix-application-id'] %> </li>
+      <li class="list-group-item"> <b>Instance ID:</b> <%- data[i].headers['x-wix-instance-id'] %> </li>
+      <li class="list-group-item"> <b>Signature:</b> <%- data[i].headers['x-wix-signature'] %> </li>
+      <li class="list-group-item"> <b>Webhook type:</b> <%- data[i].headers['x-wix-event-type'] %> </li>
     <% } %>
-      <li class="list-group-item"> Body :  <%- JSON.stringify(data[i].body) %> </li>
+      <li class="list-group-item"> <b>Body:</b>  <%- JSON.stringify(data[i].body) %> </li>
     </ul>
   </div>
   <% } %>
