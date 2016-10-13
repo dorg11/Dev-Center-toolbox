@@ -22,11 +22,6 @@ var db = mongoose.connection;
 var schema = new mongoose.Schema({ body: {}, headers: {} });
 var webhook = mongoose.model('webhook', schema);
 
-webhook.remove({ }, function (err) {
-  if (err) return handleError(err);
-  // removed!
-});
-
 app.post('/server', function(req, res) {
   console.log(JSON.stringify(req.body));
   var data = new webhook({ body: req.body, headers: req.headers });
