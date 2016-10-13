@@ -2,27 +2,18 @@
 //  OpenShift sample Node application
 var express = require('express');
 var fs      = require('fs');
-var MongoClient = require('mongodb').MongoClient;
+var mongoose = require('mongoose');
 // Retrieve
 
 
-var url = 'mongodb://admin:ee1CkJGwc7Zh@' + process.env.OPENSHIFT_MONGODB_DB_HOST + ':' + process.env.OPENSHIFT_MONGODB_DB_PORT + '/node';
-var a = 'waiting';
 // Connect to the db
 
-MongoClient.connect(url, function(err, db) {
-  if(!err) {
-    a = 'success';
-  }
-  else {
-    a = err;
-  }
-});
-/**
+
  *  Define the sample application.
  */
 var SampleApp = function() {
 
+    var url = 'mongodb://admin:ee1CkJGwc7Zh@' + process.env.OPENSHIFT_MONGODB_DB_HOST + ':' + process.env.OPENSHIFT_MONGODB_DB_PORT + '/node';
     //  Scope.
     var self = this;
 
@@ -38,13 +29,15 @@ var SampleApp = function() {
         //  Set the environment variables we need.
         self.ipaddress = process.env.OPENSHIFT_NODEJS_IP;
         self.port      = process.env.OPENSHIFT_NODEJS_PORT || 8080;
-
         if (typeof self.ipaddress === "undefined") {
             //  Log errors on OpenShift but continue w/ 127.0.0.1 - this
             //  allows us to run/test the app locally.
             console.warn('No OPENSHIFT_NODEJS_IP var, using 127.0.0.1');
             self.ipaddress = "127.0.0.1";
+            url = 'mongodb://localhost:27017/';
         };
+
+        mo
     };
 
 
