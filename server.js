@@ -39,6 +39,10 @@ app.get('/',function(req, res){
   res.sendFile(path.join(__dirname+'/index.html'));
 });
 
+app.get('db', function(req,res) {
+  res.sned(process.env.OPENSHIFT_MONGODB_DB_URL)
+});
+
 app.get('/get', function(req, res) {
   webhook.find({}, function (err, data) {
     res.send(data);
