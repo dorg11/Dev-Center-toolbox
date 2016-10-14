@@ -1,0 +1,18 @@
+body {
+    background-color: #83A8F0;
+}
+div.jumbotron.container {
+    border-radius: 5px;
+    margin-top: 30px;
+}
+h1 {
+    text-align: center;
+    margin-top: 0px;
+}
+div.card {
+    background-color: white;
+    border-radius: 5px;
+}
+#div2 {
+    margin-top: 40px;
+}
