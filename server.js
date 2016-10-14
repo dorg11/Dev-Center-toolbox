@@ -39,7 +39,7 @@ app.get('/',function(req, res){
   res.sendFile(path.join(__dirname+'/index.html'));
 });
 
-app.get('db', function(req,res) {
+app.get('/db', function(req,res) {
   res.sned(process.env.OPENSHIFT_MONGODB_DB_URL)
 });
 
