@@ -25,6 +25,7 @@
     <div class="container">
         <div class="card" style="background-color:white;border-radius:20px" ng-repeat="webhook in webhooks">
             <ul class="list-group list-group-flush">
+                {{webhook.headers}}
                 <div ng-show="webhook.headers.x-wix-application-id">
                     <li class="list-group-item"> <b>App ID</b>: {{webhook.headers.x-wix-application-id}} </li>
                     <li class="list-group-item"> <b>Instance ID:</b> {{webhook.headers.x-wix-instance-id}} </li>
@@ -33,8 +34,8 @@
                 </div>
                 <li class="list-group-item"> <b>Body:</b>
                     <code>
-        {{webhook.body | json}}
-        </code>
+                      {{webhook.body | json}}
+                    </code>
                 </li>
             </ul>
         </div>
