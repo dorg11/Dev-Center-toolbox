@@ -3,7 +3,10 @@
 
 <head>
 
+    <title>Webhooks</title>
+
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -17,28 +20,28 @@
 </head>
 
 <body style="background-color:#83A8F0" ng-controller="a">
+<div class="jumbotron container" style="border-radius:5px">
+  <h1 style="text-align:center">Incoming requests</h1>
+  <br>
 
-    <h1 style="text-align:center">Incoming requests</h1>
-
-    <br>
-
-    <div class="container">
-        <div class="card" style="background-color:white;border-radius:5px" ng-repeat="webhook in webhooks | reverse">
-            <ul class="list-group list-group-flush">
-                <div ng-show="webhook.headers['x-wix-application-id']">
-                    <li class="list-group-item"> <b>App ID</b>: {{webhook.headers['x-wix-application-id']}} </li>
-                    <li class="list-group-item"> <b>Instance ID:</b> {{webhook.headers['x-wix-instance-id']}} </li>
-                    <li class="list-group-item"> <b>Signature:</b> {{webhook.headers['x-wix-signature']}} </li>
-                    <li class="list-group-item"> <b>Event type:</b> {{webhook.headers['x-wix-event-type']}} </li>
-                </div>
-                <li class="list-group-item"> <b>Body:</b>
-                    <code>
-                      {{webhook.body | json}}
-                    </code>
-                </li>
-            </ul>
+  <div class="container">
+    <div class="card" style="background-color:white;border-radius:5px" ng-repeat="webhook in webhooks | reverse">
+      <ul class="list-group list-group-flush">
+        <div ng-show="webhook.headers['x-wix-application-id']">
+          <li class="list-group-item"> <b>App ID</b>: {{webhook.headers['x-wix-application-id']}} </li>
+          <li class="list-group-item"> <b>Instance ID:</b> {{webhook.headers['x-wix-instance-id']}} </li>
+          <li class="list-group-item"> <b>Signature:</b> {{webhook.headers['x-wix-signature']}} </li>
+          <li class="list-group-item"> <b>Event type:</b> {{webhook.headers['x-wix-event-type']}} </li>
         </div>
+        <li class="list-group-item"> <b>Body:</b>
+          <code>
+            {{webhook.body | json}}
+          </code>
+        </li>
+      </ul>
     </div>
+  </div>
+</div>
 </body>
 
 <script>
