@@ -23,14 +23,13 @@
     <br>
 
     <div class="container">
-        <div class="card" style="background-color:white;border-radius:20px" ng-repeat="webhook in webhooks">
+        <div class="card" style="background-color:white;border-radius:5px" ng-repeat="webhook in webhooks">
             <ul class="list-group list-group-flush">
-                {{webhook.headers.x-wix-signature}}
-                <div ng-show="webhook.headers.x-wix-signature">
-                    <li class="list-group-item"> <b>App ID</b>: {{webhook.headers.x-wix-application-id}} </li>
-                    <li class="list-group-item"> <b>Instance ID:</b> {{webhook.headers.x-wix-instance-id}} </li>
-                    <li class="list-group-item"> <b>Signature:</b> {{webhook.headers.x-wix-signature}} </li>
-                    <li class="list-group-item"> <b>Event type:</b> {{webhook.headers.x-wix-event-type}} </li>
+                <div ng-show="webhook.headers['x-wix-application-id']">
+                    <li class="list-group-item"> <b>App ID</b>: {{webhook.headers['x-wix-application-id']}} </li>
+                    <li class="list-group-item"> <b>Instance ID:</b> {{webhook.headers['x-wix-instance-id']}} </li>
+                    <li class="list-group-item"> <b>Signature:</b> {{webhook.headers['x-wix-signature']}} </li>
+                    <li class="list-group-item"> <b>Event type:</b> {{webhook.headers['x-wix-event-type']}} </li>
                 </div>
                 <li class="list-group-item"> <b>Body:</b>
                     <code>
