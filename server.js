@@ -2,7 +2,9 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var path = require('path');
 app.set('view engine', 'ejs');
+
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
@@ -34,8 +36,8 @@ app.post('/server', function(req, res) {
     }
   })
 });
-app.get('/', function(req,res) {
-  res.send('working');
+app.get('/',function(req, res){
+  res.sendFile(path.join(__dirname+'/index.html'));
 });
 
 
@@ -43,7 +45,12 @@ app.get('/display', function(req, res) {
   webhook.find({}, function (err, data) {
     res.render('index', {data: data});
   })
-})
+});
+app.get('/get', function(req, res) {
+  webhook.find({}, function (err, data) {
+    res.send(data);
+  })
+});
 
 app.listen(server_port, server_ip_address, function () {
   console.log( "Listening on " + server_ip_address + ", port " + server_port )
