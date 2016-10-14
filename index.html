@@ -2,7 +2,7 @@
 <html ng-app="app">
 
 <head>
-  
+
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <!-- Latest compiled and minified CSS -->
@@ -23,7 +23,7 @@
     <br>
 
     <div class="container">
-        <div class="card" style="background-color:white;border-radius:5px" ng-repeat="webhook in webhooks">
+        <div class="card" style="background-color:white;border-radius:5px" ng-repeat="webhook in webhooks | reverse">
             <ul class="list-group list-group-flush">
                 <div ng-show="webhook.headers['x-wix-application-id']">
                     <li class="list-group-item"> <b>App ID</b>: {{webhook.headers['x-wix-application-id']}} </li>
@@ -53,6 +53,11 @@
             console.log(response);
         });
     });
+    app.filter('reverse', function() {
+      return function(items) {
+        return items.slice().reverse();
+    };
+});
 </script>
 
 </html>

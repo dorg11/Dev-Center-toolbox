@@ -39,10 +39,6 @@ app.get('/',function(req, res){
   res.sendFile(path.join(__dirname+'/index.html'));
 });
 
-app.get('/db', function(req,res) {
-  res.send(process.env.OPENSHIFT_MONGODB_DB_URL)
-});
-
 app.get('/get', function(req, res) {
   webhook.find({}, function (err, data) {
     res.send(data);
@@ -52,3 +48,4 @@ app.get('/get', function(req, res) {
 app.listen(server_port, server_ip_address, function () {
   console.log( "Listening on " + server_ip_address + ", port " + server_port )
 });
+//mongodb://admin:ee1CkJGwc7Zh@127.11.121.130:27017/
