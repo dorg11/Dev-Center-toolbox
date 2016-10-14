@@ -18,27 +18,27 @@
 
 <body style="background-color:#83A8F0" ng-controller="a">
 
-<h1 style="text-align:center">Incoming requests</h1>
+    <h1 style="text-align:center">Incoming requests</h1>
 
-<br>
+    <br>
 
-<div class="container">
-  <div class="card" style="background-color:white;border-radius:20px" ng-repeat="webhook in webhooks">
-    <ul class="list-group list-group-flush">
-      <div ng-show="webhooks.headers.x-wix-application-id">
-        <li class="list-group-item"> <b>App ID</b>: {{webhook.headers.x-wix-application-id}} </li>
-        <li class="list-group-item"> <b>Instance ID:</b> {{webhook.headers.x-wix-instance-id}} </li>
-        <li class="list-group-item"> <b>Signature:</b> {{webhook.headers.x-wix-signature}} </li>
-        <li class="list-group-item"> <b>Event type:</b> {{webhook.headers.x-wix-event-type}} </li>
-      </div>
-      <li class="list-group-item"> <b>Body:</b>
-        <code>
+    <div class="container">
+        <div class="card" style="background-color:white;border-radius:20px" ng-repeat="webhook in webhooks">
+            <ul class="list-group list-group-flush">
+                <div ng-show="webhooks.headers.x-wix-application-id">
+                    <li class="list-group-item"> <b>App ID</b>: {{webhook.headers.x-wix-application-id}} </li>
+                    <li class="list-group-item"> <b>Instance ID:</b> {{webhook.headers.x-wix-instance-id}} </li>
+                    <li class="list-group-item"> <b>Signature:</b> {{webhook.headers.x-wix-signature}} </li>
+                    <li class="list-group-item"> <b>Event type:</b> {{webhook.headers.x-wix-event-type}} </li>
+                </div>
+                <li class="list-group-item"> <b>Body:</b>
+                    <code>
         {{webhook.body | json}}
-        </code> 
-    </li>
-    </ul>
-  </div>
-</div>
+        </code>
+                </li>
+            </ul>
+        </div>
+    </div>
 </body>
 
 <script>
@@ -46,7 +46,7 @@
     app.controller('a', function($scope, $http) {
         $http({
             method: 'GET',
-            url: 'http://localhost:8080/get'
+            url: '/get'
         }).then(function successCallback(response) {
             $scope.webhooks = response.data;
         }, function errorCallback(response) {
