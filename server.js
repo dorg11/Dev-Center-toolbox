@@ -3,7 +3,6 @@ var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var path = require('path');
-app.set('view engine', 'ejs');
 
 
 app.use(bodyParser.json()); // for parsing application/json
@@ -40,12 +39,6 @@ app.get('/',function(req, res){
   res.sendFile(path.join(__dirname+'/index.html'));
 });
 
-
-app.get('/display', function(req, res) {
-  webhook.find({}, function (err, data) {
-    res.render('index', {data: data});
-  })
-});
 app.get('/get', function(req, res) {
   webhook.find({}, function (err, data) {
     res.send(data);
