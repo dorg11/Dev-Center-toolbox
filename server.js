@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var path = require('path');
 
-
+app.use('/static', express.static('public'));
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
@@ -24,7 +24,6 @@ var schema = new mongoose.Schema({ body: {}, headers: {} });
 var webhook = mongoose.model('webhook', schema);
 
 app.post('/server', function(req, res) {
-  console.log(JSON.stringify(req.body));
   var data = new webhook({ body: req.body, headers: req.headers });
   data.save(function (err) {
     if(err) {
