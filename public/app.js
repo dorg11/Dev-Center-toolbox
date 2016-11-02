@@ -14,15 +14,15 @@ app.controller('change', function($scope) {
         var parser = document.createElement('a');
         parser.href = $scope.url;
         var query = parser.search;
-        var old = getParameterByName('instance', query).split('.')[1];
-        var instance = JSON.parse(atob(old));
+        $scope.old = getParameterByName('instance', query).split('.')[1];
+        var instance = JSON.parse(atob($scope.old));
         if ($scope.vpi != undefined) {
             instance.vendorProductId = $scope.vpi;
         } else {
             $scope.message = "vendorProductId not provided";
         }
         var updated = btoa(JSON.stringify(instance));
-        $scope.res = $scope.url.replace(old, updated);
+        $scope.res = $scope.url.replace($scope.old, updated);
     };
 
     function getParameterByName(name, url) {
