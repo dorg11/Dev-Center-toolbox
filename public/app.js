@@ -10,19 +10,21 @@ app.controller('a', function($scope, $http) {
     });
 });
 app.controller('change', function($scope) {
+    $scope.old;
     $scope.parse = function() {
         var parser = document.createElement('a');
         parser.href = $scope.url;
         var query = parser.search;
-        $scope.old = getParameterByName('instance', query).split('.')[1];
-        var instance = JSON.parse(atob($scope.old));
+        var old = getParameterByName('instance', query).split('.')[1];
+        $scope.old = old;
+        var instance = JSON.parse(atob(old));
         if ($scope.vpi != undefined) {
             instance.vendorProductId = $scope.vpi;
         } else {
             $scope.message = "vendorProductId not provided";
         }
         var updated = btoa(JSON.stringify(instance));
-        $scope.res = $scope.url.replace($scope.old, updated);
+        $scope.res = $scope.url.replace(old, updated);
     };
 
     function getParameterByName(name, url) {
@@ -38,7 +40,7 @@ app.controller('change', function($scope) {
     }
     $scope.select = function() {
       $("textarea").select();
-      document.execCommand('copy');
+
     };
 });
 app.filter('reverse', function() {
