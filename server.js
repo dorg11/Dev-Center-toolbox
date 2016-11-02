@@ -45,6 +45,10 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
+app.get('/change', function(req, res) {
+  res.sendFile(path.join(__dirname + '/change.html'));
+});
+
 app.get('/get', function(req, res) {
     webhook.find({}, function(err, data) {
         res.json(data);

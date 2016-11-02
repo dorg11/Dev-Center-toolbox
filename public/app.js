@@ -9,6 +9,9 @@ app.controller('a', function($scope, $http) {
         console.log(response);
     });
 });
+app.controller('change', function($scope){
+  
+});
 app.filter('reverse', function() {
     return function(items) {
         return items.slice().reverse();

@@ -1,0 +1,31 @@
+<!doctype html>
+<html ng-app="app">
+
+<head>
+
+    <title>Webhooks</title>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="/static/app.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/static/style.css" />
+
+</head>
+
+<body ng-controller="change">
+    <div class="jumbotron container">
+        <h2> Enter Url</h2>
+        <input ng-model="url" class="form-control"/>
+
+        {{url.host}}
+
+        <h2> Enter vendorProductId</h2>
+        <input ng-model="vpi" class="form-control"/>
+    </div>
+</body>
+
+</html>
