@@ -3,7 +3,7 @@
 
 <head>
 
-    <title>Webhooks</title>
+    <title>tools</title>
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
@@ -32,11 +32,14 @@
             <div class="form-group" ng-show="res">
                 <label for="res">Premium url</label>
                 <textarea class="form-control" ng-model="res" id="res"></textarea>
-                <button  class="btn btn-link" ng-click="select()">Select & Copy</button>
+                <button class="btn btn-link" ng-click="select()">Select & Copy</button>
             </div>
-
-
         </form>
+        <div ng-show="url">
+          <code>
+            {{old | json}}
+          </code>
+        </div>
     </div>
 </body>
 
