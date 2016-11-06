@@ -32,13 +32,12 @@ app.controller('change', function($scope, $http) {
             url: '/sign',
             params: {signature: $scope.instance[0], data: btoa(JSON.stringify(instance))}
         }).then(function successCallback(response) {
-            signed = response.data;
+            var updated = btoa(JSON.stringify(instance));
+            $scope.res = $scope.url.replace($scope.old, updated).replace($scope.instance[0], response.data);
         }, function errorCallback(response) {
             console.log(response);
         });
       }
-      var updated = btoa(JSON.stringify(instance));
-      $scope.res = $scope.url.replace($scope.old, updated).replace($scope.instance[0], signed);
     };
     $scope.showInstance = function() {
       $scope.instance = $scope.parse();
