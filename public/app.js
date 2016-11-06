@@ -44,7 +44,7 @@ app.controller('change', function($scope) {
     }
     $scope.select = function() {
       $("textarea").select();
-
+      document.execCommand('copy');
     };
 });
 app.filter('reverse', function() {
