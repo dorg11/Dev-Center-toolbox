@@ -28,17 +28,18 @@
                 <label for="vpi">Premium vendorProductId</label>
                 <input ng-model="vpi" class="form-control" id="vpi" />
             </div>
-            <br />
             <div class="btn-group" role="group">
                 <button class="btn btn-primary" ng-click="showInstance()">Show Instance</button>
                 <button class="btn btn-primary" ng-click="replace()">Replace</button>
-            </div>
+            </div> <br />
             <div class="form-group" ng-show="res">
                 <label for="res">Premium url</label>
                 <textarea rows="7" class="form-control" ng-model="res" id="res"></textarea>
                 <button class="btn btn-link" ng-click="select()">Select & Copy</button>
-            </div>
+            </div> <br />
+
             <div class="form-group" ng-show="instance">
+                <label>Instance object</label>
                 <pre>{{instance | json}}</pre>
             </div>
 
