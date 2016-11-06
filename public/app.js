@@ -38,6 +38,7 @@ app.controller('change', function($scope, $http) {
             console.log(response);
         });
       }
+      $scope.instance = $scope.parse();
     };
     $scope.showInstance = function() {
       $scope.instance = $scope.parse();
