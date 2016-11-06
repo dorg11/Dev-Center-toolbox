@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
+var crypto = require('crypto');
 var bodyParser = require('body-parser');
 var path = require('path');
 
@@ -46,9 +47,13 @@ app.get('/', function(req, res) {
 });
 
 app.get('/change', function(req, res) {
-  res.sendFile(path.join(__dirname + '/change.html'));
+    res.sendFile(path.join(__dirname + '/change.html'));
 });
-
+app.get('/sign', function(req, res) {
+    var data = req.query.data;
+    var hmac = crypto.createHmac('sha256', req.query.signature);
+    res.send(hmac.update(data).digest('base64'));
+});
 app.get('/get', function(req, res) {
     webhook.find({}, function(err, data) {
         res.json(data);

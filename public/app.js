@@ -14,7 +14,8 @@ app.controller('change', function($scope) {
         var parser = document.createElement('a');
         parser.href = $scope.url;
         var query = parser.search;
-        $scope.old = getParameterByName('instance', query).split('.')[1];
+        $scope.instance = getParameterByName('instance', query).split('.');
+        $scope.old = $scope.instance[1];
         return JSON.parse(atob($scope.old));
     };
     $scope.replace = function() {
@@ -23,6 +24,17 @@ app.controller('change', function($scope) {
           instance.vendorProductId = $scope.vpi;
       } else {
           $scope.message = "vendorProductId not provided";
+      }
+      if ($scope.secret) {
+        $http({
+            method: 'GET',
+            url: '/sign',
+            params: {signature: $scope.instance[0], data: btoa(JSON.stringify(instance))}
+        }).then(function successCallback(response) {
+            $scope.display = response.data;
+        }, function errorCallback(response) {
+            console.log(response);
+        });
       }
       var updated = btoa(JSON.stringify(instance));
       $scope.res = $scope.url.replace($scope.old, updated);
