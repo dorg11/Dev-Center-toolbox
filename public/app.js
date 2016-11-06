@@ -16,6 +16,7 @@ app.controller('change', function($scope, $http) {
         var query = parser.search;
         $scope.instance = getParameterByName('instance', query).split('.');
         $scope.old = $scope.instance[1];
+        console.log($scope.old);
         return JSON.parse(atob($scope.old));
     };
     $scope.replace = function() {
