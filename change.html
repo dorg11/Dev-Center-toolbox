@@ -37,9 +37,7 @@
                 <button class="btn btn-link" ng-click="select()">Select & Copy</button>
             </div>
             <div class="form-group" ng-show="instance">
-              <pre>
-                <code>{{instance}}</code>
-              </pre>
+                <code>{{instance | json}}</code>
             </div>
 
         </form>
