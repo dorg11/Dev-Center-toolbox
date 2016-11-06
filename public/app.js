@@ -25,20 +25,20 @@ app.controller('change', function($scope, $http) {
       } else {
           $scope.message = "vendorProductId not provided";
       }
+      var signed;
       if ($scope.secret) {
         $http({
             method: 'GET',
             url: '/sign',
             params: {signature: $scope.instance[0], data: btoa(JSON.stringify(instance))}
         }).then(function successCallback(response) {
-            console.log('get success?');
-            $scope.display = response.data;
+            signed = response.data;
         }, function errorCallback(response) {
             console.log(response);
         });
       }
       var updated = btoa(JSON.stringify(instance));
-      $scope.res = $scope.url.replace($scope.old, updated);
+      $scope.res = $scope.url.replace($scope.old, updated).replace($scope.instnace[0], signed);
     };
     $scope.showInstance = function() {
       $scope.instance = $scope.parse();
