@@ -16,7 +16,6 @@ app.controller('change', function($scope, $http) {
         var query = parser.search;
         $scope.instance = getParameterByName('instance', query).split('.');
         $scope.old = $scope.instance[1];
-        console.log($scope.url);
         return JSON.parse(atob($scope.old));
     };
     $scope.replace = function() {
@@ -33,6 +32,8 @@ app.controller('change', function($scope, $http) {
             url: '/sign',
             params: {signature: $scope.instance[0], data: btoa(JSON.stringify(instance))}
         }).then(function successCallback(response) {
+            console.log(response.data);
+            console.log($scope.instance[0]);
             var updated = btoa(JSON.stringify(instance));
             $scope.res = $scope.url.replace($scope.old, updated).replace($scope.instance[0], response.data);
         }, function errorCallback(response) {
