@@ -18,16 +18,16 @@ var url = 'mongodb://127.0.0.1:27017/';
 //take advantage of openshift env vars when available:
 if (process.env.OPENSHIFT_MONGODB_DB_URL) {
     url = process.env.OPENSHIFT_MONGODB_DB_URL;
+    mongoose.connect(url);
+    var db = mongoose.connection;
+
+    var schema = new mongoose.Schema({
+      body: {},
+      headers: {}
+    });
+    var webhook = mongoose.model('webhook', schema);
 }
-mongoose.connect(url);
 
-var db = mongoose.connection;
-
-var schema = new mongoose.Schema({
-    body: {},
-    headers: {}
-});
-var webhook = mongoose.model('webhook', schema);
 
 app.post('/server', function(req, res) {
     var data = new webhook({
