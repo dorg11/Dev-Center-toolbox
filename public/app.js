@@ -28,7 +28,7 @@ app.controller('change', function($scope) {
       $scope.res = $scope.url.replace(old, updated);
     };
     $scope.showInstance = function() {
-      $scope.instance = JSON.stringify($scope.parse(), null,4);
+      $scope.instance = $scope.parse();
 
     }
     function getParameterByName(name, url) {
