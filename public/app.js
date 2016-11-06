@@ -27,14 +27,12 @@ app.controller('change', function($scope, $http) {
       }
       var signed;
       var updated = btoa(JSON.stringify(instance));
-      console.log(updated);
       if ($scope.secret) {
         $http({
             method: 'GET',
             url: '/sign',
             params: {signature: $scope.secret, data: updated}
         }).then(function successCallback(response) {
-            console.log(response.data);
             $scope.res = $scope.url.replace($scope.old, updated).replace($scope.instance[0], response.data);
         }, function errorCallback(response) {
             console.log(response);
