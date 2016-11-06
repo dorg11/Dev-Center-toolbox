@@ -18,7 +18,7 @@
 
 <body ng-controller="change">
     <div class="jumbotron container">
-        <h1><u>Insert premium vendorProductId</u></h1>
+        <h1><u>Instance helper</u></h1>
         <form>
             <div class="form-group">
                 <label for="url">Endpoint url</label>
@@ -28,13 +28,17 @@
                 <label for="vpi">Premium vendorProductId</label>
                 <input ng-model="vpi" class="form-control" id="vpi" />
             </div>
+            <br />
+            <button class="btn btn-primary" ng-click="showInstance()">Show Instance</button><br />
             <button class="btn btn-primary" ng-click="parse()">DO IT</button><br />
             <div class="form-group" ng-show="res">
                 <label for="res">Premium url</label>
                 <textarea class="form-control" ng-model="res" id="res"></textarea>
                 <button class="btn btn-link" ng-click="select()">Select & Copy</button>
             </div>
-
+            <div class="form-group" ng-show="instance">
+              {{instance}}
+            </div>
 
         </form>
     </div>

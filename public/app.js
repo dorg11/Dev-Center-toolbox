@@ -15,15 +15,22 @@ app.controller('change', function($scope) {
         parser.href = $scope.url;
         var query = parser.search;
         var old = getParameterByName('instance', query).split('.')[1];
-        var instance = JSON.parse(atob(old));
-        if ($scope.vpi != undefined) {
-            instance.vendorProductId = $scope.vpi;
-        } else {
-            $scope.message = "vendorProductId not provided";
-        }
-        var updated = btoa(JSON.stringify(instance));
-        $scope.res = $scope.url.replace(old, updated);
+        return JSON.parse(atob(old));
     };
+    $scope.replace = function() {
+      var instance = $scope.parse();
+      if ($scope.vpi != undefined) {
+          instance.vendorProductId = $scope.vpi;
+      } else {
+          $scope.message = "vendorProductId not provided";
+      }
+      var updated = btoa(JSON.stringify(instance));
+      $scope.res = $scope.url.replace(old, updated);
+    };
+    $scope.showInstance = function() {
+      $scope.instance = $scope.parse();
+
+    }
     function getParameterByName(name, url) {
         if (!url) {
             url = window.location.href;
