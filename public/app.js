@@ -26,14 +26,14 @@ app.controller('change', function($scope, $http) {
           $scope.message = "vendorProductId not provided";
       }
       var signed;
+      var updated = btoa(JSON.stringify(instance));
+      console.log(updated);
       if ($scope.secret) {
         $http({
             method: 'GET',
             url: '/sign',
-            params: {signature: $scope.instance[0], data: btoa(JSON.stringify(instance))}
+            params: {signature: $scope.instance[0], data: updated}
         }).then(function successCallback(response) {
-            console.log(btoa(JSON.stringify(instance));
-            var updated = btoa(JSON.stringify(instance));
             $scope.res = $scope.url.replace($scope.old, updated).replace($scope.instance[0], response.data);
         }, function errorCallback(response) {
             console.log(response);
