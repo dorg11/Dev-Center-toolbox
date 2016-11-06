@@ -38,7 +38,7 @@ app.controller('change', function($scope, $http) {
         });
       }
       var updated = btoa(JSON.stringify(instance));
-      $scope.res = $scope.url.replace($scope.old, updated).replace($scope.instnace[0], signed);
+      $scope.res = $scope.url.replace($scope.old, updated).replace($scope.instance[0], signed);
     };
     $scope.showInstance = function() {
       $scope.instance = $scope.parse();
