@@ -9,7 +9,7 @@ app.controller('a', function($scope, $http) {
         console.log(response);
     });
 });
-app.controller('change', function($scope) {
+app.controller('change', function($scope, $http) {
     $scope.parse = function() {
         var parser = document.createElement('a');
         parser.href = $scope.url;
@@ -31,6 +31,7 @@ app.controller('change', function($scope) {
             url: '/sign',
             params: {signature: $scope.instance[0], data: btoa(JSON.stringify(instance))}
         }).then(function successCallback(response) {
+            console.log('get success?');
             $scope.display = response.data;
         }, function errorCallback(response) {
             console.log(response);
@@ -41,7 +42,6 @@ app.controller('change', function($scope) {
     };
     $scope.showInstance = function() {
       $scope.instance = $scope.parse();
-
     }
     function getParameterByName(name, url) {
         if (!url) {
