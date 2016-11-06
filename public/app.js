@@ -14,7 +14,7 @@ app.controller('change', function($scope) {
         var parser = document.createElement('a');
         parser.href = $scope.url;
         var query = parser.search;
-        var old = getParameterByName('instance', query).split('.')[1];
+        $scope.old = getParameterByName('instance', query).split('.')[1];
         return JSON.parse(atob(old));
     };
     $scope.replace = function() {
@@ -25,7 +25,7 @@ app.controller('change', function($scope) {
           $scope.message = "vendorProductId not provided";
       }
       var updated = btoa(JSON.stringify(instance));
-      $scope.res = $scope.url.replace(old, updated);
+      $scope.res = $scope.url.replace($scope.old, updated);
     };
     $scope.showInstance = function() {
       $scope.instance = $scope.parse();
