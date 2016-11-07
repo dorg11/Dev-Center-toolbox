@@ -46,13 +46,17 @@ app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname + '/index.html'));
 });
 
-app.get('/change', function(req, res) {
-    res.sendFile(path.join(__dirname + '/change.html'));
+app.get('/change',function(req,res){
+  res.redirect('/instance');
+});
+
+app.get('/instance', function(req, res) {
+    res.sendFile(path.join(__dirname + '/instance.html'));
 });
 app.get('/sign', function(req, res) {
     var data = req.query.data;
     var hmac = crypto.createHmac('sha256', req.query.signature);
-    res.send(hmac.update(data).digest('base64').replace('+', '-').replace('/', '_').replace('=',''));
+    res.send(hmac.update(data).digest('base64').replace('+', '-').replace('/', '_').replace('==','').replace('=',''));
 });
 app.get('/get', function(req, res) {
     webhook.find({}, function(err, data) {
