@@ -1,42 +1,48 @@
 angular.module('app').controller('instance', function($scope, $http) {
-
-  
-    $scope.parse = function() {
-        var parser = document.createElement('a');
-        parser.href = $scope.url;
-        var query = parser.search;
-        $scope.instance = getParameterByName('instance', query).split('.');
-        $scope.old = $scope.instance[1];
-        return JSON.parse(atob($scope.old));
+    $scope.instance = {};
+    var instance = $scope.instance;
+    instance.show = false;
+    instance.alreadyParsed = false;
+    instance.parse = function() {
+        instance.anchor = document.createElement('a');
+        instance.anchor.href = instance.page.url;
+        instance.data = getParameterByName('instance', instance.anchor.search).split('.');
+        instance.before = instance.data[1];
+        instance.parsed = JSON.parse(atob(instance.before));
     };
-    $scope.replace = function() {
-        var instance = $scope.parse();
-        if ($scope.vpi != undefined) {
-            instance.vendorProductId = $scope.vpi;
+    instance.display = function() {
+      if(!instance.alreadyParsed) {
+        instance.parse()
+      };
+      instance.show = !instance.show;
+    };
+    instance.replace = function() {
+        instance.parse()
+        if (instance.page.vpi != undefined) {
+            instance.parsed.vendorProductId = instance.page.vpi;
         } else {
-            $scope.message = "vendorProductId not provided";
+            instance.page.message = "vendorProductId not provided";
         }
         var signed;
-        var updated = btoa(JSON.stringify(instance));
-        if ($scope.secret) {
+        instance.updated = btoa(JSON.stringify(instance.parsed));
+        if (instance.page.secret) {
             $http({
                 method: 'GET',
                 url: '/sign',
                 params: {
-                    signature: $scope.secret,
-                    data: updated
+                    signature: instance.page.secret,
+                    data: instance.updated
                 }
             }).then(function successCallback(response) {
-                $scope.res = $scope.url.replace($scope.old, updated).replace($scope.instance[0], response.data);
+                instance.res = instance.page.url.replace(instance.before, instance.updated).replace(instance.data[0], response.data);
             }, function errorCallback(response) {
                 console.log(response);
             });
         }
+        else {
+          instance.page.message = "Secret key must be provided";
+        }
     };
-    $scope.showInstance = function() {
-        $scope.parsed = $scope.parse();
-    }
-
     function getParameterByName(name, url) {
         if (!url) {
             url = window.location.href;
@@ -48,7 +54,7 @@ angular.module('app').controller('instance', function($scope, $http) {
         if (!results[2]) return '';
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
-    $scope.select = function() {
+    instance.select = function() {
         $("textarea").select();
         document.execCommand('copy');
     };

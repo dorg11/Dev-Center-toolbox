@@ -56,7 +56,7 @@ app.get('/instance', function(req, res) {
 app.get('/sign', function(req, res) {
     var data = req.query.data;
     var hmac = crypto.createHmac('sha256', req.query.signature);
-    res.send(hmac.update(data).digest('base64').replace('+', '-').replace('/', '_').replace('==','').replace('=',''));
+    res.send(hmac.update(data).digest('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g,''));
 });
 app.get('/get', function(req, res) {
     webhook.find({}, function(err, data) {
