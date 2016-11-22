@@ -1,0 +1,47 @@
+<!doctype html>
+<html ng-app="app">
+
+<head>
+
+    <title>Hive</title>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="static/app.js"></script>
+    <script src="/static/controllers/hive.js"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/static/style.css" />
+
+</head>
+<body ng-controller="hive">
+  <div class="jumbotron container">
+      <h1><u>Make a HIVE get request</u></h1>
+      <form>
+          <div class="form-group">
+              <label for="url">GET url</label>
+              <input ng-model="hive.relativeUrl" class="form-control" id="url" />
+          </div>
+          <div class="form-group">
+              <label for="vpi">AppId</label>
+              <input ng-model="hive.appId" class="form-control" id="vpi" />
+          </div>
+          <div class="form-group">
+              <label>App secret key</label>
+              <input ng-model="hive.secretKey" class="form-control" />
+          </div>
+          <div class="form-group">
+              <label>InstanceId</label>
+              <input ng-model="hive.instanceId" class="form-control" />
+          </div>
+          <div class="btn-group" role="group">
+              <button class="btn btn-primary" ng-click="hive.getSignature()">Sign</button>
+              <button class="btn btn-primary" ng-click="hive.makeRequest()">send</button>
+          </div>
+          {{hive.request}}
+      </form>
+  </div>
+</body>
+</html>
