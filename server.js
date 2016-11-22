@@ -28,6 +28,23 @@ if (process.env.OPENSHIFT_MONGODB_DB_URL) {
     var webhook = mongoose.model('webhook', schema);
 }
 
+app.get('/hive', function(req,res) {
+    res.sendFile(path.join(__dirname + '/hive.html'));  
+});
+
+app.get('/hiveSign', function(req, res) {
+    var headers = 'GET\n';
+    headers += req.query.relativeUrl;
+    headers += '\n1.0.0\n';
+    headers += req.query.appId;
+    headers += '\n';
+    headers += req.query.instanceId;
+    headers += '\n';
+    headers += req.query.timeStamp;
+    var hmac = crypto.createHmac('sha256', req.query.secretKey );
+    var newSignature = hmac.update(headers).digest('base64').replace(/\+/g, '-').replace(/\//g, '_'); //different base64 standards
+    res.send(newSignature);
+});
 
 app.post('/server', function(req, res) {
     var data = new webhook({
