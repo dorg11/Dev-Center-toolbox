@@ -38,11 +38,21 @@ app.get('/hiveGet', function(req, res) {
     hiveReq.timeStamp = new Date();
     hiveReq.timeStamp = hiveReq.timeStamp.toISOString();
     hiveReq.url = 'https://openapi.wix.com';
-    hiveReq.headers = 'GET\n' + req.query.relativeUrl + '\n1.0.0\n' + req.query.appId + '\n' + req.query.instanceId + '\n' + hiveReq.timeStamp;
+    hiveReq.queryAddition = '';
+    hiveReq.reqQuery = '';
+    if (req.query.queryParams) {
+      hiveReq.queryParams = JSON.parse(req.query.queryParams);
+      hiveReq.queryAddition = '\n';
+      for (var j, i = hiveReq.queryParams.length - 1, j = 0 ; i >= 0; i--, j++) {
+        hiveReq.queryAddition +=  hiveReq.queryParams[i].value + (i > 0 ? '\n'  : '');
+        hiveReq.reqQuery += '&' + hiveReq.queryParams[j].name + '=' + hiveReq.queryParams[j].value;
+      }
+    }
+    hiveReq.headers = 'GET\n' + req.query.relativeUrl + hiveReq.queryAddition + '\n1.0.0\n' + req.query.appId + '\n' + req.query.instanceId + '\n' + hiveReq.timeStamp;
     hiveReq.signature = crypto.createHmac('sha256', req.query.secretKey);
     hiveReq.signature = hiveReq.signature.update(hiveReq.headers).digest('base64').replace(/\+/g, '-').replace(/\//g, '_'); //different base64 standards
     hiveReq.options = {
-        url: hiveReq.url + req.query.relativeUrl + '?version=1.0.0',
+        url: hiveReq.url + req.query.relativeUrl + '?version=1.0.0' + hiveReq.reqQuery,
         headers: {
             'x-wix-application-id': req.query.appId,
             'x-wix-instance-id': req.query.instanceId,
@@ -53,7 +63,6 @@ app.get('/hiveGet', function(req, res) {
     request.get(hiveReq.options, function(error, response, body) {
         res.send(response.body);
     });
-
 });
 
 app.post('/server', function(req, res) {
