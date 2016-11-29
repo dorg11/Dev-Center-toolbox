@@ -23,11 +23,15 @@
         <h1><u>Make a HIVE get request</u></h1>
         <form>
             <div class="form-group">
-                <label for="url">GET url</label>
+                <label for="type">Request Type (capital letters)</label>
+                <input ng-model="hive.requestType" class="form-control" id="type" />
+            </div>
+            <div class="form-group">
+                <label for="url">Relative url</label>
                 <input ng-model="hive.relativeUrl" class="form-control" id="url" />
             </div>
             <div class="form-group">
-                <label for="url">Query</label>
+                <label for="url">Query (correct json format or empty)</label>
                 <input ng-model="hive.queryParams" class="form-control" id="url" />
             </div>
             <div class="form-group">
