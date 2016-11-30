@@ -1,19 +1,25 @@
 body {
     background-image: url("https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-348739.jpg");
-    background-color: #83A8F0;
-}
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size:cover
+  }
+
 div.jumbotron.container {
     border-radius: 5px;
     margin-top: 30px;
 }
+
 h1 {
     text-align: center;
     margin-top: 0px;
 }
+
 div.card {
     background-color: white;
     border-radius: 5px;
 }
+
 #div2 {
     margin-top: 40px;
 }
