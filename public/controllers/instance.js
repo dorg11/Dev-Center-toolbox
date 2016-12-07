@@ -10,14 +10,9 @@ angular.module('app').controller('instance', function($scope, $http) {
         instance.before = instance.data[1];
         instance.parsed = JSON.parse(atob(instance.before));
     };
-    instance.display = function() {
-      if(!instance.alreadyParsed) {
-        instance.parse()
-      };
-      instance.show = !instance.show;
-    };
+    instance.parsed = {};
     instance.replace = function() {
-        instance.parse()
+        instance.parse();
         if (instance.page.vpi != undefined) {
             instance.parsed.vendorProductId = instance.page.vpi;
         } else {

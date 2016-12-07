@@ -19,7 +19,7 @@
 </head>
 
 <body ng-controller="hive">
-    <div class="jumbotron container mainbox col-md-4 col-md-offset-4 ">
+    <div class="jumbotron container mainbox col-md-4 col-md-offset-4">
         <h1><u>HTTP API Helper</u></h1><br />
         <form class=>
             <div class="form-group">
@@ -30,9 +30,35 @@
                 <label for="url">Url</label>
                 <select class="form-control" ng-model="hive.relativeUrl" ng-init="hive.relativeUrl = '/contacts'" ng-options="url for url in hive.request[hive.requestType]" id="url"></select>
             </div>
-            <div class="form-group">
-                <label for="query">Query (correct json format or empty)</label>
-                <input ng-model="hive.queryParams" class="form-control" id="query" />
+            <div class="form-inline form-group" ng-show="hive.requestType == 'POST'">
+              <h3>Post Body</h3>
+              <div ng-repeat="body in hive.postBody">
+                <label>Key</label>
+                <input ng-model="body.key" class="form-control" />
+                <label>Value</label>
+                <input ng-model="body.value" class="form-control" />
+                <button class="btn btn-xs" ng-click="hive.removeBodyObj(body)">
+                  -
+                </button>
+              </div>
+              <button class="btn btn-xs" ng-click="hive.addBodyObj()">
+                +
+              </button>
+            </div>
+            <div class="form-inline form-group">
+              <h3>Query Parameters</h3>
+              <div ng-repeat="query in hive.queryParams">
+                <label>Key</label>
+                <input ng-model="query.key" class="form-control" />
+                <label>Value</label>
+                <input ng-model="query.value" class="form-control" />
+                <button class="btn btn-xs" ng-click="hive.removeQueryParam(query)">
+                  -
+                </button>
+              </div>
+              <button class="btn btn-xs" ng-click="hive.addQueryParam()">
+                +
+              </button>
             </div>
             <div class="form-group">
                 <label for="vpi">AppId</label>

@@ -34,38 +34,97 @@ app.get('/hive', function(req, res) {
 });
 
 app.get('/hiveGet', function(req, res) {
-    var hiveReq = {};
-    hiveReq.timeStamp = new Date();
-    hiveReq.timeStamp = hiveReq.timeStamp.toISOString();
-    hiveReq.url = 'https://openapi.wix.com';
-    hiveReq.queryAddition = '';
-    hiveReq.reqQuery = '';
-    if (req.query.queryParams) {
-        hiveReq.queryParams = JSON.parse(req.query.queryParams);
-        hiveReq.queryAddition = '\n';
-        for (var j, i = hiveReq.queryParams.length - 1, j = 0; i >= 0; i--, j++) {
-            hiveReq.queryAddition += hiveReq.queryParams[i].value + (i > 0 ? '\n' : '');
-            hiveReq.reqQuery += '&' + hiveReq.queryParams[j].name + '=' + hiveReq.queryParams[j].value;
-        }
-    }
-    hiveReq.headers = req.query.requestType + '\n' + req.query.relativeUrl + hiveReq.queryAddition + '\n1.0.0\n' + req.query.appId + '\n' + req.query.instanceId + '\n' + hiveReq.timeStamp;
-    hiveReq.signature = crypto.createHmac('sha256', req.query.secretKey);
-    hiveReq.signature = hiveReq.signature.update(hiveReq.headers).digest('base64').replace(/\+/g, '-').replace(/\//g, '_'); //different base64 standards
-    hiveReq.options = {
-        method: req.query.requestType,
-        url: hiveReq.url + req.query.relativeUrl + '?version=1.0.0' + hiveReq.reqQuery,
-        headers: {
-            'x-wix-application-id': req.query.appId,
-            'x-wix-instance-id': req.query.instanceId,
-            'x-wix-timestamp': hiveReq.timeStamp,
-            'x-wix-signature': hiveReq.signature //signature that my server generated (equal sign is tossed)
-        }
-    }
-    request(hiveReq.options, function(error, response, body) {
-        res.send(response.body);
-    });
+    var request = new hiveReq(req.query);
+    request.run(res);
 });
+var hiveReq = function(query) {
+    var timeStamp = new Date();
+    var url = 'https://openapi.wix.com';
+    var reqQuery = '';
+    var signString = '';
+    var paramArray = [{
+        'version': '1.0.0'
+    }];
+    var signArray = [];
+    var formData = {};
+    var options = {};
+    var queryParams = null;
+    var parsedBody;
+    var signature;
+    var res = {};
+    var parseBody = function() {
+        if (query.postBody) {
+            parsedBody = JSON.parse(query.postBody);
+            parsedBody.forEach(function(elem) {
+                formData[elem.key] = elem.value;
+                var obj = {};
+                obj[elem.key] = elem.value;
+                paramArray.push(obj);
+            })
+        }
+    }
+    var parseQuery = function() {
+        if (query.queryParams) {
+            queryParams = JSON.parse(query.queryParams);
+            queryParams.forEach(function(elem) {
+                reqQuery += '&' + elem.key + '=' + elem.value;
+                var obj = {};
+                obj[elem.key] = elem.value;
+                paramArray.push(obj);
+            })
+        }
+    }
+    var fillOptions = function() {
+        options = {
+            method: query.requestType,
+            url: url + query.relativeUrl + '?version=1.0.0' + reqQuery,
+            headers: {
+                'x-wix-application-id': query.appId,
+                'x-wix-instance-id': query.instanceId,
+                'x-wix-timestamp': timeStamp,
+                'x-wix-signature': signature //signature that my server generated (equal sign is tossed)
+            },
+        }
+        Object.keys(formData).length > 0 ? options.form = formData : null;
+    }
+    var sign = function() {
+        var res;
+        timeStamp = timeStamp.toISOString();
+        signArray.unshift(query.relativeUrl);
+        signArray.unshift(query.requestType);
+        paramArray.forEach(function (item) {
+          Object.keys(item).map(function(key) {
+            signArray.push(item[key]);
+          })
+        })
+        signArray.push(timeStamp);
+        signString = signArray.join('\n');
+        res = crypto.createHmac('sha256', query.secretKey);
+        signature = res.update(signString).digest('base64').replace(/\+/g, '-').replace(/\//g, '_'); //different base64 standards
+    }
+    var parseParams = function() {
+        parseBody();
+        parseQuery();
+        paramArray.push({
+          'x-wix-application-id': query.appId
+        });
+        paramArray.push({
+          'x-wix-instance-id': query.instanceId
+        });
+        paramArray.sort(function(a,b) {
+          return (Object.keys(a)[0] > Object.keys(b)[0] ?  1 : -1)
+        });
 
+    }
+    this.run = function(res) {
+        parseParams();
+        sign();
+        fillOptions();
+        request(options, function(error, response, body) {
+            res.send(response.body);
+        });
+    }
+}
 app.post('/server', function(req, res) {
     var data = new webhook({
         body: req.body,

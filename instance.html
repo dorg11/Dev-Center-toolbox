@@ -18,15 +18,12 @@
 </head>
 
 <body ng-controller="instance">
-    <div class="jumbotron container">
+    <div class="jumbotron container mainbox col-md-4 col-md-offset-4">
         <h1><u>Instance helper</u></h1>
-        <div class="alert alert-danger" ng-show="instance.page.message">
-          {{instance.page.message}}
-        </div>
         <form>
             <div class="form-group">
                 <label for="url">Endpoint url</label>
-                <input ng-model="instance.page.url" class="form-control" id="url" />
+                <input ng-change="instance.parse()" ng-model="instance.page.url" class="form-control" id="url" />
             </div>
             <div class="form-group">
                 <label for="vpi">Premium vendorProductId</label>
@@ -37,7 +34,6 @@
                 <input ng-model="instance.page.secret" class="form-control" />
             </div>
             <div class="btn-group" role="group">
-                <button class="btn btn-primary" ng-click="instance.display()">Show Instance</button>
                 <button class="btn btn-primary" ng-click="instance.replace()">Replace</button>
             </div>
             <div class="form-group" ng-show="instance.res">
@@ -46,7 +42,7 @@
                 <textarea rows="7" class="form-control" ng-model="instance.res" id="res"></textarea>
                 <button class="btn btn-link" ng-click="instance.select()">Select & Copy</button>
             </div>
-            <div class="form-group" ng-show="instance.show">
+            <div class="form-group">
                 <label>Instance object</label>
                 <pre>{{instance.parsed | json}}</pre>
             </div>
